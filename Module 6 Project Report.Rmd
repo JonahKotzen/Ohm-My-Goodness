@@ -1,0 +1,87 @@
+---
+title: "Body Temperature Variations in Human Subjects"
+author: "Ohm My Goodness"
+date: "2023-10-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse) #duh
+```
+
+# Introduction
+
+In this project, we investigate the variations in body temperature among human subjects based on their activity levels. We aim to answer the question: "Does body temperature vary in human subjects according to activity level?" This study is motivated by the need to understand how physical activity influences body temperature.
+
+To frame our investigation, we will begin by reviewing relevant literature.
+
+## Literature Review
+
+We conducted a literature review to understand previous research on the effect of activity on body temperature. One relevant study by [Author et al., Year] found that...
+
+# Methods
+
+## Data Collection
+
+We collected temperature data using an Arduino-based temperature sensor. Participants were monitored during two conditions: (1) at rest (sitting on the couch) and (2) after performing physical activity (jumping jacks). Axillary temperature was recorded using the sensor placed in the armpit.
+
+# Results
+
+## Data Combination
+
+We combined all data files into one table for analysis. The table includes information on participant names, activity conditions, time (in milliseconds), and temperature (in degrees Celsius).
+
+```{r, data}
+
+# Find the data files
+dat_files <- list.files(pattern = "couch|active.csv")
+
+# Create an empty list to store data frames
+dat_list <- list()
+
+# Iterate through data files
+for (file in dat_files) {
+  metadata <- unlist(strsplit(file, "_"))
+  name <- metadata[1]
+  activity <- gsub(".csv", "", metadata[2])
+  dat <- read_csv(file) %>%
+    mutate(Name = name, Activity = activity)
+  dat_list[[file]] <- dat
+}
+
+```
+
+``` {r, combining data and summary}
+# Combine data frames into one
+combined_data <- bind_rows(dat_list)
+
+# View the combined data
+View(combined_data)
+
+# Calculate mean temperature and standard deviation by activity and subject
+summary_data <- combined_data %>%
+  group_by(Activity, Name) %>%
+  summarise(Mean_Temperature = mean(degC), SD_Temperature = sd(degC))
+
+```
+
+``` {plotting data}
+# Create a plot to visualize the results
+ggplot(summary_data, aes(x = Activity, y = Mean_Temperature, fill = Name)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  geom_errorbar(aes(ymin = Mean_Temperature - SD_Temperature, ymax = Mean_Temperature + SD_Temperature),
+                width = 0.2, position = position_dodge(0.9)) +
+  labs(title = "Effect of Activity on Body Temperature",
+       x = "Activity", y = "Mean Temperature (°C)",
+       fill = "Name") +
+  theme_minimal() +
+  theme(legend.position = "top")
+
+```
+
+##Discussion
+
+##Author Contributions
+
+##References
