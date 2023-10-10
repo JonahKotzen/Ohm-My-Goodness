@@ -4,7 +4,6 @@ author: "Ohm My Goodness"
 date: "2023-10-04"
 output: html_document
 ---
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse) #duh
@@ -12,7 +11,7 @@ library(tidyverse) #duh
 
 # Introduction
 
-In this project, we investigate the variations in body temperature among human subjects based on their activity levels. We aim to answer the question: "Does body temperature vary in human subjects according to activity level?" This study is motivated by the need to understand how physical activity influences body temperature.
+In this project, we investigate the variations in body temperature among human subjects based on their activity levels. We aim to answer the question: "Does body temperature vary in human subjects according to activity level?" This study is motivated by the need to understand how physical activity influences body temperature. We hypothesize that our individual exercising temperatures will be higher on average than our individual resting temperatures. This would be due to increased muscle activity releasing heat into the surroundings.
 
 To frame our investigation, we will begin by reviewing relevant literature.
 
@@ -22,9 +21,11 @@ We conducted a literature review to understand previous research on the effect o
 
 # Methods
 
+To collect our data, we sat in the atrium of Higgins. To measure our resting temperatures, we sat in the chairs that were on the second floor with the sensor under our armpits. Since we did not have anything to clean the sensor between group members, we placed the sensor between our sweatshirts/jackets and t-shirts in order to record approximate temperatures without being unsanitary. The sensor was allowed to warm up to around 33 degrees Celcius before we started recording. We recorded for approximately one minute and 40 seconds for each person. Once our resting temperatures were recorded, we ran around Higgins, did jumping jacks, and took several flights of stairs for a total of five minutes in order to get our exercising temperatures. Within one minute of everyone finishing their exercise, they had the sensor in the same position and under the same arm as they did in the resting temperature collection. The sensor was again allowed to warm up to near body temperature before we collected the exercising temperatures for approximately one minute and 40 seconds.
+
 ## Data Collection
 
-We collected temperature data using an Arduino-based temperature sensor. Participants were monitored during two conditions: (1) at rest (sitting on the couch) and (2) after performing physical activity (jumping jacks). Axillary temperature was recorded using the sensor placed in the armpit.
+We collected temperature data using an Arduino-based temperature sensor. Participants were monitored during two conditions: (1) resting (sitting on the couch) and (2) exercising (jumping jacks, running around, etc.). Axillary temperature was recorded using the sensor placed in the armpit. The sensor was not placed directly against our skin since we did not have the available materials to sanitize the sensor between subjects.
 
 # Results
 
@@ -83,5 +84,7 @@ ggplot(summary_data, aes(x = Activity, y = Mean_Temperature, fill = Name)) +
 ##Discussion
 
 ##Author Contributions
+
+Katie Miller wrote the Methods section as well as part of the Data Collection section, with some technical assistance in data collection (holding the sensor into the breadbox). 
 
 ##References
