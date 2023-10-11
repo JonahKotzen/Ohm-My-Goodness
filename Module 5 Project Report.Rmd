@@ -62,4 +62,6 @@ Katie Miller wrote the Methods section as well as part of the Data Collection se
 
 Binghao Deng cited papers, added information to multiple sections introduction and results, wrote discussion, and also contributed to data collection (timing 100s for each temperature reading).
 
+Jess Stolz helped create "skeleton" of rmd file code and reviewed/edited final version of code through comparing.  Also assisted in data collection. 
+
 ## References
