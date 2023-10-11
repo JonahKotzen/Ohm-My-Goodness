@@ -3,37 +3,30 @@ title: "Body Temperature Variations in Human Subjects"
 author: "Ohm My Goodness"
 date: "2023-10-04"
 output: html_document
+bibliography: Project5.bib
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse) #duh
+library(tidyverse)
+
 ```
 
 ## Introduction
+In this project, we investigate the variations in body temperature among human subjects based on their activity levels. We aim to answer the question: "Does body temperature vary in human subjects according to activity level?" A review [@kenny2017restoration] shows that performing exercies would lead to a increase of internal temperature. Human body has developed many thermoregulation responses such as sweating and skin blood flow to increase whole body heat loss, causing a rise of body temperature. This study is designed to test whether our data supports the review's conclusion. We hypothesize that our individual exercising temperatures will be higher on average than our individual resting temperatures similar to the review.
 
-In this project, we investigate the variations in body temperature among human subjects based on their activity levels. We aim to answer the question: "Does body temperature vary in human subjects according to activity level?" This study is motivated by the need to understand how physical activity influences body temperature. We hypothesize that our individual exercising temperatures will be higher on average than our individual resting temperatures. This would be due to increased muscle activity releasing heat into the surroundings.
-
-To frame our investigation, we will begin by reviewing relevant literature.
-
-## Literature Review
-
-We conducted a literature review to understand previous research on the effect of activity on body temperature. One relevant study by [Author et al., Year] found that...
 
 ## Methods
+### Data Collection
+To collect our data, we sat in the atrium of Higgins. To measure our resting temperatures, we sat in the chairs that were on the second floor with the sensor under our armpits. Since we did not have anything to clean the sensor between group members, we placed the sensor between our sweatshirts/jackets and t-shirts in order to record approximate temperatures without being unsanitary. The sensor was allowed to warm up to around 33 degrees Celcius before we started recording. We recorded for approximately one minute and 40 seconds for each person. Once our resting temperatures were recorded, we ran around Higgins, did jumping jacks, and took several flights of stairs for a total of five minutes in order to get our exercising temperatures. Within one minute of everyone finishing their exercise, they had the sensor in the same position and under the same arm as they did in the resting temperature collection. The sensor was again allowed to warm up to near body temperature before we collected the exercising temperatures for approximately one minute and 40 seconds.  
 
-To collect our data, we sat in the atrium of Higgins. To measure our resting temperatures, we sat in the chairs that were on the second floor with the sensor under our armpits. Since we did not have anything to clean the sensor between group members, we placed the sensor between our sweatshirts/jackets and t-shirts in order to record approximate temperatures without being unsanitary. The sensor was allowed to warm up to around 33 degrees Celcius before we started recording. We recorded for approximately one minute and 40 seconds for each person. Once our resting temperatures were recorded, we ran around Higgins, did jumping jacks, and took several flights of stairs for a total of five minutes in order to get our exercising temperatures. Within one minute of everyone finishing their exercise, they had the sensor in the same position and under the same arm as they did in the resting temperature collection. The sensor was again allowed to warm up to near body temperature before we collected the exercising temperatures for approximately one minute and 40 seconds.
-
-## Data Collection
-
+### Experimental Design
 We collected temperature data using an Arduino-based temperature sensor. Participants were monitored during two conditions: (1) resting (sitting on the couch) and (2) exercising (jumping jacks, running around, etc.). Axillary temperature was recorded using the sensor placed in the armpit. The sensor was not placed directly against our skin since we did not have the available materials to sanitize the sensor between subjects.
 
 ## Results
 
-## Data Combination
-
 We combined all data files into one table for analysis. The table includes information on participant names, activity conditions, time (in milliseconds), and temperature (in degrees Celsius).
 
-```{r, data}
+```{r, plotting, echo=FALSE,message=FALSE,fig.cap="Boxplot comparisons of temperature reads for individuals after exercising vs. sitting on couch"}
 
 # Find the data files
 dat_files <- list.files(pattern = "couch|active.csv")
@@ -47,44 +40,26 @@ for (file in dat_files) {
   name <- metadata[1]
   activity <- gsub(".csv", "", metadata[2])
   dat <- read_csv(file) %>%
-    mutate(Name = name, Activity = activity)
+    mutate(name = name, activity = activity)
   dat_list[[file]] <- dat
 }
-
+dat <- do.call(rbind,dat_list)
+dat %>% 
+  ggplot()+geom_boxplot(aes(x=activity,y=degC))+facet_grid(.~name)
 ```
 
-``` {r, combining data and summary}
-# Combine data frames into one
-combined_data <- bind_rows(dat_list)
+The plot shows that for every individual, the average of body temperatures read immediately after five minutes of exercises is higher than the average of body temperatures read when sitting on a couch. Overall, though some data points overlapped between the two conditions for some individuals, body temperatures read after activity has a higher maximum and higher minimum compared to the inactive condition.
 
-# View the combined data
-View(combined_data)
+## Discussion
 
-# Calculate mean temperature and standard deviation by activity and subject
-summary_data <- combined_data %>%
-  group_by(Activity, Name) %>%
-  summarise(Mean_Temperature = mean(degC), SD_Temperature = sd(degC))
+The results are consistent with the conclusions of review [@kenny2017restoration]. According to @neves2015different, skin temperature on the active muscle would increase right after exercises. This conclusion also matches with our results.   
 
-```
+This research is limited in sample size since only 4 individuals are tested. To acquire a more accurate measurement, future research can include more participants. In addition, future research should also control variables such as sex and age of the study participants and attempts different ways of data collection such as using infrared cameras. 
 
-``` {plotting data}
-# Create a plot to visualize the results
-ggplot(summary_data, aes(x = Activity, y = Mean_Temperature, fill = Name)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  geom_errorbar(aes(ymin = Mean_Temperature - SD_Temperature, ymax = Mean_Temperature + SD_Temperature),
-                width = 0.2, position = position_dodge(0.9)) +
-  labs(title = "Effect of Activity on Body Temperature",
-       x = "Activity", y = "Mean Temperature (°C)",
-       fill = "Name") +
-  theme_minimal() +
-  theme(legend.position = "top")
-
-```
-
-##Discussion
-
-##Author Contributions
+## Author Contributions
 
 Katie Miller wrote the Methods section as well as part of the Data Collection section, with some technical assistance in data collection (holding the sensor into the breadbox). 
 
-##References
+Binghao Deng cited papers, added information to multiple sections(introduction, results, and discussionn), and also contributed to data collection (timing 100s for each temperature reading)
+
+## References
