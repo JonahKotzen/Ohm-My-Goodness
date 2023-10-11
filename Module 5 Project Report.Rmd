@@ -60,6 +60,6 @@ This research is limited in sample size since only 4 individuals are tested. To 
 
 Katie Miller wrote the Methods section as well as part of the Data Collection section, with some technical assistance in data collection (holding the sensor into the breadbox). 
 
-Binghao Deng cited papers, added information to multiple sections(introduction, results, and discussionn), and also contributed to data collection (timing 100s for each temperature reading)
+Binghao Deng cited papers, added information to multiple sections introduction and results, wrote discussion, and also contributed to data collection (timing 100s for each temperature reading).
 
 ## References
