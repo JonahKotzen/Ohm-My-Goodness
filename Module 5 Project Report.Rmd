@@ -64,4 +64,6 @@ Binghao Deng cited papers, added information to multiple sections introduction a
 
 Jess Stolz helped create "skeleton" of rmd file code and reviewed/edited final version of code through comparing.  Also assisted in data collection. 
 
+Jonah Kotzen took and set up the skeleton of the project, the arduino code, and the physical components. Also played the major role in recording temperature reads and reading them into csv.
+
 ## References
